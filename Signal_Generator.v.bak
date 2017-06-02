@@ -1,0 +1,110 @@
+
+
+
+
+
+
+
+
+
+module  SIG_GEN(
+              CLOCK_50,
+				  VGA_clk,
+				  Vsyn,
+				  blank_n,
+				  inphase_signal,
+				  quadrature_signal,
+				  outdata,
+				  disa,
+				  switch,
+				  
+
+ );
+ 
+ input CLOCK_50;
+input switch;
+input isig;
+input qsig;
+output reg disa;
+output [9:0] Val_CY;
+output reg [13:0] outda;
+input VGA_clk;
+input Vsyn;
+input blank_n;
+reg [9:0] Val_CY;
+
+
+parameter nc=2;
+//parameter np=nc*512;
+
+reg [7:0] Addr_11;
+reg [7:0] Addr_10;
+reg [7:0] Addr_01;
+reg [7:0] Addr_00;
+
+
+
+reg [13:0] i_11;
+reg [13:0] i_10;
+reg [13:0] i_01;
+reg [13:0] i_00;
+
+reg [13:0] captured_Values [nc*512-1:0];
+reg [31:0] i; //index of vector
+
+
+//Oscilloscope
+//Time Values
+parameter Ttotal=0.000025;
+parameter DivX=10;
+parameter pixelsH=640;
+parameter integer nf=2;     
+
+//Amplitude Values
+parameter Amp=4;
+parameter Atotal=16;
+parameter DivY=8;
+parameter pixelsV=480;
+parameter integer Apixels=120;
+
+	// captured values
+	
+	reg [31:0] j=0;
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

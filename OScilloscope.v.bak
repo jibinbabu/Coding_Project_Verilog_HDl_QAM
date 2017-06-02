@@ -1,0 +1,184 @@
+module oscilloscope( CLOCK_50 ,signal ,oVGA_CLK,oVS,oHS,oBLANK_n,b_data,g_data,r_data);
+
+input CLOCK_50;
+input wire[15:0] out_Data;
+output oVGA_CLK;
+output oVS;
+output oHS;
+output oBLANK_n;
+output reg [7:0] b_data;
+output reg [7:0] g_data ;  
+output reg [7:0] r_data;                     
+
+// Variables for VGA Clock 
+reg vga_clk_reg;                   
+wire iVGA_CLK;
+
+//Variables for (x,y) coordinates VGA
+wire [10:0] CX;
+wire [9:0] CY;
+
+//Oscilloscope parameters
+	//Horizontal
+	parameter DivX=1;  				// number of horizontal division
+	parameter Ttotal=0.000025;   		// total time represented in the screen
+	parameter pixelsH=640.0;  		// number of horizontal pixels
+	//parameter IncPixX= 0.000025/DivX;				// time between two consecutive pixels
+	//Amplitude
+	parameter DivY=1;  					// number of vertical divisions
+	parameter Atotal=16.0;				// total volts represented in the screen
+	parameter pixelsV=480.0;  			// number of vertical pixels	
+	//parameter IncPixY=Atotal/(pixelsV-1.0);	// volts between two consecutive pixels
+
+// Sinusoidal wave amplitude	
+//parameter Amp=4.0;					// maximum amplitude of sinusoidal wave [-Amp, Amp]
+parameter integer Apixels=150;	// number of pixels to represent the maximum amplitude	
+
+//Vector to store the input signal (Section 6.1)
+ //parameter integer nc=3;  //number of cycles 					
+ reg[15:0] capturedVals[767:0]; 		// vector with values of input signal
+integer i;							// index of the vector
+
+//Read the signal values from the vector (Section 6.2)
+integer j; 								// read the correct element of the vector
+//parameter integer nf=2; 					//Vector points between two consecutive pixels 
+
+//Value of the current pixel (Section 6.2 and 6.3)
+reg [9:0] ValforVGA; 
+reg [9:0] oldValforVGA; 
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// 25 MHz clock for the VGA clock
+
+always @(posedge CLOCK_50)
+begin
+	vga_clk_reg =~vga_clk_reg;
+end
+assign iVGA_CLK =vga_clk_reg  ;
+
+assign oVGA_CLK =~iVGA_CLK;
+
+
+// instance VGA controller
+
+VGA_Controller VGA_ins( .vga_clk(iVGA_CLK),
+                               		 .reset(1'b0),
+                       			.BLANK_n(oBLANK_n),
+                    		   	.HS(oHS),
+                       			.VS(oVS),
+				 	.CoorX(CX),
+					.CoorY(CY)
+					);
+						
+
+// Store input signal in a vector (Section 6.1)			
+
+always@(negedge CLOCK_50)
+
+begin
+capturedVals[i]<=out_Data;
+if(i<nc*256-1)
+begin
+i=i+1;
+end
+else
+i<=0;
+
+end
+
+
+// Read the correct point of the signal stored in the vector and calculate the pixel associated given the amplitude and the parameters of the oscilloscope (Section 6.2)
+
+always@(negedge iVGA_CLK)
+begin
+	if (oBLANK_n==1)
+		begin
+		ValforVGA <=239+Apixels-((capturedVals[j]*Apixels*2)>>16)  ;
+		if(j<nc*256-nf)	
+			j<=j+nf;
+		else
+			j<=0;
+		end
+	else
+		j=0;
+	
+end
+
+				
+
+// Calculate the RGB values
+
+/*always@(negedge iVGA_CLK)
+begin 
+	//display the vertical guide lines
+	 if (CX==63 || CX==127 ||CX==191 ||CX==255 ||CX==319 ||CX==383 || CX==447 ||CX==511 ||CX==575 ||CX==639)
+		begin
+		b_data=8'b11111111 ;
+		g_data=8'b11111111;
+		r_data=8'b11111111;
+		end
+	//display the horizontal guide lines
+		else if (CY==59 || CY==119 ||CY==179 ||CY==239 ||CY==299 ||CY==359 ||CY==419||CY==479)
+		begin
+		b_data=8'b11111111;
+		g_data=8'b11111111;
+		r_data=8'b11111111;
+		end
+	//Everything else is black
+	else
+		begin
+		b_data=8'b00000000;
+		g_data=8'b00000000;
+		r_data=8'b00000000;
+		end
+end*/
+
+always@(negedge iVGA_CLK)
+begin
+//oldValforVGA<=ValforVGA; //Update the value of oldValforVGA
+//Display the Coordinate Y of the current Coordinate X
+if (CY==ValforVGA)
+begin
+		//Connect points with vertical lines (old value <current value)
+		r_data<=8'b11111111;
+		g_data<=8'b00000000;
+		b_data<=8'b00000000;
+end
+else if (oldValforVGA<CY && CY<ValforVGA) 
+			begin
+			r_data<=8'b11111111;
+			g_data<=8'b00000000;
+			b_data<=8'b00000000;//connect points with vertical lines (old value >current value)
+			end
+else if (oldValforVGA>CY && CY>ValforVGA) 
+			begin
+			r_data<=8'b11111111;
+			g_data<=8'b00000000;
+			b_data<=8'b00000000;//connect points with vertical lines (old value >current value)
+			end
+else if (CX==63 || CX==127 ||CX==191 ||CX==255 ||CX==319 ||CX==383 || CX==447 ||CX==511 ||CX==575 ||CX==639)
+		begin
+		b_data<=8'b11111111 ;
+		g_data<=8'b11111111;
+		r_data<=8'b11111111;
+		end
+else if (CY==59 || CY==119 ||CY==179 ||CY==239 ||CY==299 ||CY==359 ||CY==419||CY==479)
+		begin
+		b_data<=8'b11111111;
+		g_data<=8'b11111111;
+		r_data<=8'b11111111;
+		end
+else
+begin
+		b_data<=8'b00000000 ;
+		g_data<=8'b00000000;
+		r_data<=8'b00000000;
+end
+end
+
+
+endmodule
+
+
+

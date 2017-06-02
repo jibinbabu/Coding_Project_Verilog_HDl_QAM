@@ -1,0 +1,97 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/simulation/modelsim
+vOScilloscope
+Z1 !s110 1461785516
+!i10b 1
+!s100 eXzCQ]4>2oT@WgSZaY87=0
+I^lk0OiNDDW_l?i[6VSkiN0
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1461783835
+8C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/OScilloscope.v
+FC:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/OScilloscope.v
+L0 1
+Z3 OV;L;10.4b;61
+r1
+!s85 0
+31
+Z4 !s108 1461785516.000000
+!s107 C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/OScilloscope.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM|C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/OScilloscope.v|
+!i113 1
+Z5 o-vlog01compat -work work
+Z6 !s92 -vlog01compat -work work {+incdir+C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM}
+n@o@scilloscope
+vqam_top
+R1
+!i10b 1
+!s100 QlS4z6K9j;iQbJUHI`]:z0
+IX8j`[ha0KTKL2R9FbJOA72
+R2
+R0
+w1461782687
+8C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/qam_top.v
+FC:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/qam_top.v
+L0 1
+R3
+r1
+!s85 0
+31
+R4
+!s107 C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/qam_top.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM|C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/qam_top.v|
+!i113 1
+R5
+R6
+vSignal_Generator
+!s110 1461785515
+!i10b 1
+!s100 :GnlTd^iIM2LBK`FBQgbX0
+IVRCLa^inFK<[U27f=ZUOB3
+R2
+R0
+w1461783201
+8C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/Signal_Generator.v
+FC:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/Signal_Generator.v
+L0 10
+R3
+r1
+!s85 0
+31
+!s108 1461785515.000000
+!s107 C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/Signal_Generator.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM|C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/Signal_Generator.v|
+!i113 1
+R5
+R6
+n@signal_@generator
+vVGA_Controller
+R1
+!i10b 1
+!s100 l8ahF6<6CQ?83lFBOM<k[3
+I:N6;gVVFhA3J;^OPz5Xf]3
+R2
+R0
+w1461273724
+8C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/VGA_Controller.v
+FC:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/VGA_Controller.v
+L0 1
+R3
+r1
+!s85 0
+31
+R4
+!s107 C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/VGA_Controller.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM|C:/Users/Jibin/Desktop/Semester_2/Digital System Design/QAM/VGA_Controller.v|
+!i113 1
+R5
+R6
+n@v@g@a_@controller
